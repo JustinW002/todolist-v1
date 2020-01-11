@@ -45,7 +45,11 @@ app.post("/work",function (req,res) {
     workItems.push(newListItem);
     res.redirect("/work");
     
-})
+});
+
+app.get("/about",function (req,res) {
+    res.render("about");
+});
 
 
 
