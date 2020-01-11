@@ -10,27 +10,26 @@ app.listen(3000,function(){
     console.log("connected to port 3000");
 });
 
+var items=["buy food", "cook food", "eat food"];
+
 app.get("/",function(req,res){
     var today= new Date();
-var currentDay= today.getDay();
-var day=selectDay(currentDay); 
-    res.render("list",{kindOfDay:day});
+    var options={
+        weekday:"long",
+        day:"numeric",
+        month:"long"
+    }
+    var day=today.toLocaleDateString("en-US",options);
+    res.render("list",{kindOfDay:day, newListItems:items});
 });
 
-function selectDay(number){
-    switch (number) {
-        case 0: return "Sunday"
-        case 1: return "Monday"
-        case 2: return "Tuesday"
-        case 3: return "Wednesday"
-        case 4: return "Thursday"
-        case 5: return "Friday"
-        case 6: return "Saturday"
-        default:
-            console.log("incorrect date");
-            return "Not a day of the week";
-    }
-}
+app.post("/",function(req,res){
+    var newListItem=req.body.newItem;
+items.push(newListItem);
+    res.redirect('/');
+});
+
+
 
 
 
